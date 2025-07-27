@@ -1,0 +1,177 @@
+.mouse-dot,
+.mouse-trail {
+  border-radius: 50%;
+  pointer-events: none;
+}
+input:-webkit-autofill:active,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+select:-webkit-autofill,
+select:-webkit-autofill:focus,
+select:-webkit-autofill:hover,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:hover {
+  -webkit-box-shadow: 0 0 0 1000px #000 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background-color: #000 !important;
+  background-image: none !important;
+  transition: background-color 5000s ease-in-out !important;
+}
+input:-internal-autofill-selected,
+input:autofill {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+.mouse-animation-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+.mouse-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #ffc107;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.8);
+}
+.mouse-dot.active {
+  transform: translate(-50%, -50%) scale(1.5);
+  box-shadow: 0 0 15px rgba(255, 193, 7, 0.9);
+}
+.expand-button::after,
+.mouse-trail {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.mouse-trail {
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 193, 7, 0.4);
+  z-index: 1;
+}
+:root {
+  --btn-width: 300px;
+  --btn-height: 60px;
+  --btn-radius: 50px;
+  --btn-circle-size: 60px;
+  --btn-font-size: 18px;
+  --btn-border-width: 2px;
+  --btn-bg: transparent;
+  --btn-border: #ffffff;
+  --btn-border-hover: #f4d03f;
+  --btn-text: #ffffff;
+  --btn-text-hover: #1a1a1a;
+  --btn-circle-bg: #eee82c;
+  --btn-icon-color: #1a1a1a;
+  --btn-transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.expand-button {
+  position: relative;
+  display: inline-block;
+  width: var(--btn-width);
+  height: var(--btn-height);
+  border: var(--btn-border-width) solid var(--btn-border);
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.3s;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-size: var(--btn-font-size);
+  font-weight: 600;
+  outline: 0;
+  padding: 0 20px 0 calc(var(--btn-circle-size) + 10px);
+  text-align: left;
+  line-height: calc(var(--btn-height) - 4px);
+  text-decoration: none;
+  z-index: 5;
+}
+.expand-button:hover {
+  border-color: var(--btn-border-hover);
+  color: var(--btn-text-hover);
+}
+.expand-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--btn-circle-size);
+  height: 100%;
+  background: var(--btn-circle-bg);
+  border-radius: var(--btn-radius);
+  transition: width var(--btn-transition);
+  z-index: -1;
+}
+.expand-button:hover::before {
+  width: 100%;
+}
+.expand-button::after {
+  content: "→";
+  top: 50%;
+  left: calc(var(--btn-circle-size) / 2);
+  color: var(--btn-icon-color);
+  font-size: calc(var(--btn-font-size) + 2px);
+  font-weight: 700;
+  z-index: 10;
+}
+.btn-extra-small {
+  --btn-width: 180px;
+  --btn-height: 40px;
+  --btn-circle-size: 40px;
+  --btn-font-size: 14px;
+}
+.btn-small {
+  --btn-width: 240px;
+  --btn-height: 50px;
+  --btn-circle-size: 50px;
+  --btn-font-size: 16px;
+}
+.btn-large {
+  --btn-width: 360px;
+  --btn-height: 70px;
+  --btn-circle-size: 70px;
+  --btn-font-size: 20px;
+}
+.btn-extra-large {
+  --btn-width: 420px;
+  --btn-height: 80px;
+  --btn-circle-size: 80px;
+  --btn-font-size: 22px;
+}
+.btn-blue {
+  --btn-border-hover: #3498db;
+  --btn-circle-bg: #3498db;
+}
+.btn-green {
+  --btn-border-hover: #2ecc71;
+  --btn-circle-bg: #2ecc71;
+}
+.btn-red {
+  --btn-border-hover: #e74c3c;
+  --btn-circle-bg: #e74c3c;
+}
+.btn-purple {
+  --btn-border-hover: #9b59b6;
+  --btn-circle-bg: #9b59b6;
+}
+.btn-orange {
+  --btn-border-hover: #f39c12;
+  --btn-circle-bg: #f39c12;
+}
+.btn-dark {
+  --btn-bg: #2c3e50;
+  --btn-border: #34495e;
+  --btn-text: #ecf0f1;
+}
+.btn-gradient {
+  background: linear-gradient(135deg, #667eea 0, #764ba2 100%) !important;
+  --btn-border: transparent;
+  --btn-text: #ffffff;
+}
