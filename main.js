@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Animation loop with same easing as your code (0.15)
   function animate() {
-    dotX += (mouseX - dotX) * 0.15;
-    dotY += (mouseY - dotY) * 0.15;
+    dotX += (mouseX - dotX) * 0.08;
+    dotY += (mouseY - dotY) * 0.08;
 
     mouseDot.style.left = dotX + "px";
     mouseDot.style.top = dotY + "px";
