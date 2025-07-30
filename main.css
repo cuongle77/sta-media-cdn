@@ -1,8 +1,3 @@
-.mouse-dot,
-.mouse-trail {
-  border-radius: 50%;
-  pointer-events: none;
-}
 input:-webkit-autofill:active,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:hover,
@@ -23,6 +18,14 @@ input:autofill {
   background-color: #000 !important;
   color: #fff !important;
 }
+
+/* Mouse animation styles */
+.mouse-dot,
+.mouse-trail {
+  border-radius: 50%;
+  pointer-events: none;
+}
+
 .mouse-animation-container {
   position: fixed;
   top: 0;
@@ -32,6 +35,7 @@ input:autofill {
   pointer-events: none;
   z-index: 9999;
 }
+
 .mouse-dot {
   position: absolute;
   width: 12px;
@@ -41,10 +45,12 @@ input:autofill {
   z-index: 3;
   box-shadow: 0 0 10px rgba(255, 193, 7, 0.8);
 }
+
 .mouse-dot.active {
   transform: translate(-50%, -50%) scale(1.5);
   box-shadow: 0 0 15px rgba(255, 193, 7, 0.9);
 }
+
 .expand-button::after,
 .mouse-trail {
   position: absolute;

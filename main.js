@@ -18,88 +18,103 @@ document.addEventListener("DOMContentLoaded", function () {
   /** ===========================================||===================================== */
 
   // Custom mouse cursor animation
-  let e = document.querySelector(".mouse-dot"),
-    t = document.querySelector(".mouse-animation-container"),
-    s = window.innerWidth / 2,
-    l = window.innerHeight / 2,
-    n = s,
-    i = l,
-    o = !1,
-    a,
-    r = [];
-  (e.style.left = s + "px"),
-    (e.style.top = l + "px"),
-    document.addEventListener("mousemove", (p) => {
-      (s = p.clientX),
-        (l = p.clientY),
-        (o = !0),
-        e.classList.add("active"),
-        (function e(s, l) {
-          let n = document.createElement("div");
-          if (
-            ((n.className = "mouse-trail"),
-            (n.style.left = s + "px"),
-            (n.style.top = l + "px"),
-            t.appendChild(n),
-            r.push(n),
-            setTimeout(() => {
-              (n.style.opacity = "0"),
-                (n.style.transform = "translate(-50%, -50%) scale(0)"),
-                (n.style.transition = "all 0.5s ease-out");
-            }, 50),
-            setTimeout(() => {
-              n.parentNode && n.parentNode.removeChild(n),
-                (r = r.filter((e) => e !== n));
-            }, 550),
-            r.length > 20)
-          ) {
-            let i = r.shift();
-            i.parentNode && i.parentNode.removeChild(i);
-          }
-        })(s, l),
-        clearTimeout(a),
-        (a = setTimeout(() => {
-          (o = !1),
-            e.classList.remove("active"),
-            (function t() {
-              let a = () => {
-                let t = s - n,
-                  o = l - i;
-                Math.sqrt(t * t + o * o) > 1
-                  ? ((n += 0.15 * t),
-                    (i += 0.15 * o),
-                    (e.style.left = n + "px"),
-                    (e.style.top = i + "px"),
-                    requestAnimationFrame(a))
-                  : ((n = s),
-                    (i = l),
-                    (e.style.left = n + "px"),
-                    (e.style.top = i + "px"));
-              };
-              o || a();
-            })();
-        }, 150));
-    }),
-    !(function t() {
-      (n += (s - n) * 0.15),
-        (i += (l - i) * 0.15),
-        (e.style.left = n + "px"),
-        (e.style.top = i + "px"),
-        requestAnimationFrame(t);
-    })(),
-    document.addEventListener("mouseleave", () => {
-      (o = !1), e.classList.remove("active"), (e.style.opacity = "0");
-    }),
-    document.addEventListener("mouseenter", () => {
-      e.style.opacity = "1";
-    }),
-    window.addEventListener("resize", () => {
-      o ||
-        ((s = window.innerWidth / 2),
-        (l = window.innerHeight / 2),
-        (n = s),
-        (i = l),
-        (e.style.left = s + "px"),
-        (e.style.top = l + "px"));
-    });
+  let mouseDot = document.querySelector(".mouse-dot");
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let dotX = mouseX;
+  let dotY = mouseY;
+  let isMoving = false;
+
+  // Set initial position
+  mouseDot.style.left = mouseX + "px";
+  mouseDot.style.top = mouseY + "px";
+
+  // Mouse move event
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    isMoving = true;
+    mouseDot.classList.add("active");
+  });
+
+  // Animation loop with same easing as your code (0.15)
+  function animate() {
+    dotX += (mouseX - dotX) * 0.15;
+    dotY += (mouseY - dotY) * 0.15;
+
+    mouseDot.style.left = dotX + "px";
+    mouseDot.style.top = dotY + "px";
+
+    requestAnimationFrame(animate);
+  }
+
+  // Start animation
+  animate();
+
+  // Mouse leave/enter handling
+  document.addEventListener("mouseleave", () => {
+    isMoving = false;
+    mouseDot.classList.remove("active");
+    mouseDot.style.opacity = "0";
+  });
+
+  document.addEventListener("mouseenter", () => {
+    mouseDot.style.opacity = "1";
+  });
+
+  // Resize handling
+  window.addEventListener("resize", () => {
+    if (!isMoving) {
+      mouseX = window.innerWidth / 2;
+      mouseY = window.innerHeight / 2;
+      dotX = mouseX;
+      dotY = mouseY;
+      mouseDot.style.left = mouseX + "px";
+      mouseDot.style.top = mouseY + "px";
+    }
+  });
+
+  // Start animation
+  animate();
+
+  // Create floating particles
+  function createParticle() {
+    const particle = document.createElement("div");
+    particle.className = "particle";
+    particle.style.left = Math.random() * window.innerWidth + "px";
+    particle.style.top = Math.random() * window.innerHeight + "px";
+
+    document.body.appendChild(particle);
+
+    // Animate particle
+    const duration = 3000 + Math.random() * 2000;
+    const startTime = Date.now();
+
+    function animateParticle() {
+      const elapsed = Date.now() - startTime;
+      const progress = elapsed / duration;
+
+      if (progress >= 1) {
+        particle.remove();
+        return;
+      }
+
+      // Float upward
+      const startY = parseFloat(particle.style.top);
+      particle.style.top = startY - progress * 100 + "px";
+      particle.style.opacity = 1 - progress;
+
+      requestAnimationFrame(animateParticle);
+    }
+
+    animateParticle();
+  }
+
+  // Create particles periodically
+  setInterval(createParticle, 1000);
+
+  // Responsive handling
+  window.addEventListener("resize", () => {
+    // Update any position-dependent calculations if needed
+  });
 });
