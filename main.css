@@ -1,3 +1,4 @@
+/* CONFIG BASE */
 input:-webkit-autofill:active,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:hover,
@@ -19,49 +20,8 @@ input:autofill {
   color: #fff !important;
 }
 
-/* Mouse animation styles */
-.mouse-dot,
-.mouse-trail {
-  border-radius: 50%;
-  pointer-events: none;
-}
+/* ================== EXPAND BUTTON ==================== */
 
-.mouse-animation-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-}
-
-.mouse-dot {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background: #ffc107;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  box-shadow: 0 0 10px rgba(255, 193, 7, 0.8);
-}
-
-.mouse-dot.active {
-  transform: translate(-50%, -50%) scale(1.5);
-  box-shadow: 0 0 15px rgba(255, 193, 7, 0.9);
-}
-
-.expand-button::after,
-.mouse-trail {
-  position: absolute;
-  transform: translate(-50%, -50%);
-}
-.mouse-trail {
-  width: 6px;
-  height: 6px;
-  background: rgba(255, 193, 7, 0.4);
-  z-index: 1;
-}
 :root {
   --btn-width: 300px;
   --btn-height: 60px;
@@ -78,6 +38,7 @@ input:autofill {
   --btn-icon-color: #1a1a1a;
   --btn-transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
 .expand-button {
   position: relative;
   display: inline-block;
@@ -180,4 +141,22 @@ input:autofill {
   background: linear-gradient(135deg, #667eea 0, #764ba2 100%) !important;
   --btn-border: transparent;
   --btn-text: #ffffff;
+}
+
+/* Mouse animation styles */
+.mouse-dot {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: #ffc107;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  opacity: 1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.mouse-dot.active {
+  transform: translate(-50%, -50%) scale(1.5);
 }
