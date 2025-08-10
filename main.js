@@ -54,12 +54,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 150);
   });
 
+  window.addEventListener("message", (event) => {
+    if (event.data.type === "mousemove") {
+      updateDot(event.data.x, event.data.y);
+    }
+  });
+
   // Smooth animation loop
   (function smoothMove() {
     dotX += (mouseX - dotX) * 0.15;
     dotY += (mouseY - dotY) * 0.15;
-    mouseDot.style.left = `${dotX}px`;
-    mouseDot.style.top = `${dotY}px`;
+    updateDot(dotX, dotY);
     requestAnimationFrame(smoothMove);
   })();
 
@@ -82,8 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
       mouseY = window.innerHeight / 2;
       dotX = mouseX;
       dotY = mouseY;
-      mouseDot.style.left = `${dotX}px`;
-      mouseDot.style.top = `${dotY}px`;
+      updateDot(dotX, dotY);
     }
   });
 
@@ -96,14 +100,17 @@ document.addEventListener("DOMContentLoaded", function () {
     if (distance > 1) {
       dotX += dx * 0.15;
       dotY += dy * 0.15;
-      mouseDot.style.left = `${dotX}px`;
-      mouseDot.style.top = `${dotY}px`;
+      updateDot(dotX, dotY);
       requestAnimationFrame(animateDotToTarget);
     } else {
       dotX = mouseX;
       dotY = mouseY;
-      mouseDot.style.left = `${dotX}px`;
-      mouseDot.style.top = `${dotY}px`;
+      updateDot(dotX, dotY);
     }
+  }
+
+  function updateDot(x, y) {
+    mouseDot.style.left = x + "px";
+    mouseDot.style.top = y + "px";
   }
 });
