@@ -17,6 +17,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /** ===========================================||===================================== */
 
+  document.querySelectorAll("a.prevent-default").forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+    });
+  });
+
+  /** ===========================================||===================================== */
+
   // Custom mouse cursor animation
   const mouseDot = document.querySelector(".mouse-dot");
 
