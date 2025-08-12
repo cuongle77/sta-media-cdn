@@ -9,26 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   gsap.ticker.lagSmoothing(0);
 
-  const observer = new MutationObserver(() => {
-    const lightboxOpen = document.querySelector(".w-lightbox-backdrop");
-    if (lightboxOpen) {
-      lenis.stop();
-    } else {
-      lenis.start();
-    }
-  });
-
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-  });
-
-  document.querySelectorAll(".w-lightbox").forEach((lightbox) => {
-    if (lightbox.getAttribute("href") === "#") {
-      lightbox.addEventListener("click", (e) => {
-        e.preventDefault();
-      });
-    }
+  document.querySelectorAll('.w-lightbox[href="#"]').forEach((el) => {
+    el.setAttribute("href", "javascript:void(0)");
   });
 
   /** ===========================================||===================================== */
