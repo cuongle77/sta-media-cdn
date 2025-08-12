@@ -15,12 +15,37 @@ document.addEventListener("DOMContentLoaded", function () {
   // Disable lag smoothing in GSAP to prevent any delay in scroll animations
   gsap.ticker.lagSmoothing(0);
 
-  /** ===========================================||===================================== */
+  // --- Fix Lightbox: chặn Lenis bắt anchor "#" ---
+  document.querySelectorAll(".w-lightbox").forEach((lightbox) => {
+    // Ngăn Lenis intercept click này
+    lightbox.addEventListener(
+      "click",
+      (e) => {
+        e.stopPropagation(); // Chặn Lenis anchor handler
+      },
+      true // capture phase để chặn trước khi Lenis xử lý
+    );
 
-  document.querySelectorAll("a.prevent-default").forEach(function (link) {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
+    // Khi mở Lightbox → dừng Lenis
+    lightbox.addEventListener("click", () => {
+      lenis.stop();
     });
+  });
+
+  // --- Khi Lightbox đóng → resume Lenis ---
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      lenis.start();
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (
+      e.target.closest(".w-lightbox-close") ||
+      e.target.closest(".w-lightbox-backdrop")
+    ) {
+      lenis.start();
+    }
   });
 
   /** ===========================================||===================================== */
