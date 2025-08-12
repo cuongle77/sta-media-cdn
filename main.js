@@ -3,43 +3,31 @@ document.addEventListener("DOMContentLoaded", function () {
     anchors: true,
   });
 
-  // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
   lenis.on("scroll", ScrollTrigger.update);
-
-  // Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
-  // This ensures Lenis's smooth scroll animation updates on each GSAP tick
   gsap.ticker.add((time) => {
-    lenis.raf(time * 1000); // Convert time from seconds to milliseconds
+    lenis.raf(time * 1000);
   });
-
-  // Disable lag smoothing in GSAP to prevent any delay in scroll animations
   gsap.ticker.lagSmoothing(0);
 
-  // --- Fix Lightbox: chặn Lenis bắt anchor "#" ---
-  document.querySelectorAll(".w-lightbox").forEach((lightbox) => {
-    lightbox.addEventListener("click", (e) => {
-      // Nếu href="#" thì chặn default để Lenis không scroll top
-      if (lightbox.getAttribute("href") === "#") {
-        e.preventDefault(); // Chặn hành vi anchor mặc định
-      }
-      // Nhưng KHÔNG stopPropagation → Webflow vẫn bắt được click
-      lenis.stop(); // Dừng Lenis khi mở
-    });
-  });
-
-  // --- Khi Lightbox đóng → resume Lenis ---
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
+  const observer = new MutationObserver(() => {
+    const lightboxOpen = document.querySelector(".w-lightbox-backdrop");
+    if (lightboxOpen) {
+      lenis.stop();
+    } else {
       lenis.start();
     }
   });
 
-  document.addEventListener("click", (e) => {
-    if (
-      e.target.closest(".w-lightbox-close") ||
-      e.target.closest(".w-lightbox-backdrop")
-    ) {
-      lenis.start();
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  document.querySelectorAll(".w-lightbox").forEach((lightbox) => {
+    if (lightbox.getAttribute("href") === "#") {
+      lightbox.addEventListener("click", (e) => {
+        e.preventDefault();
+      });
     }
   });
 
