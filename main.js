@@ -17,18 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // --- Fix Lightbox: chặn Lenis bắt anchor "#" ---
   document.querySelectorAll(".w-lightbox").forEach((lightbox) => {
-    // Ngăn Lenis intercept click này
-    lightbox.addEventListener(
-      "click",
-      (e) => {
-        e.stopPropagation(); // Chặn Lenis anchor handler
-      },
-      true // capture phase để chặn trước khi Lenis xử lý
-    );
-
-    // Khi mở Lightbox → dừng Lenis
-    lightbox.addEventListener("click", () => {
-      lenis.stop();
+    lightbox.addEventListener("click", (e) => {
+      // Nếu href="#" thì chặn default để Lenis không scroll top
+      if (lightbox.getAttribute("href") === "#") {
+        e.preventDefault(); // Chặn hành vi anchor mặc định
+      }
+      // Nhưng KHÔNG stopPropagation → Webflow vẫn bắt được click
+      lenis.stop(); // Dừng Lenis khi mở
     });
   });
 
