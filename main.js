@@ -29,10 +29,41 @@ document.addEventListener("DOMContentLoaded", function () {
   mouseDot.style.left = `${mouseX}px`;
   mouseDot.style.top = `${mouseY}px`;
 
-  // Mouse move
+  // Check if mouse is over iframe and hide dot
+  function checkIframeOverlap() {
+    const iframes = document.querySelectorAll("iframe");
+    let isOverIframe = false;
+
+    iframes.forEach((iframe) => {
+      const rect = iframe.getBoundingClientRect();
+      if (
+        mouseX >= rect.left &&
+        mouseX <= rect.right &&
+        mouseY >= rect.top &&
+        mouseY <= rect.bottom
+      ) {
+        isOverIframe = true;
+      }
+    });
+
+    // Hide/show mouse dot based on iframe overlap
+    if (isOverIframe) {
+      mouseDot.style.opacity = "0";
+    } else {
+      mouseDot.style.opacity = "1";
+    }
+  }
+
+  // Update mouse position and check iframe overlap
+  function updateMousePosition(x, y) {
+    mouseX = x;
+    mouseY = y;
+    checkIframeOverlap();
+  }
+
+  // Override the original mousemove to include iframe check
   document.addEventListener("mousemove", (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    updateMousePosition(e.clientX, e.clientY);
     isMoving = true;
     mouseDot.classList.add("active");
 
@@ -46,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   window.addEventListener("message", (event) => {
     if (event.data.type === "mousemove") {
-      updateDot(event.data.x, event.data.y);
+      updateMousePosition(event.data.x, event.data.y);
     }
   });
 
@@ -102,5 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateDot(x, y) {
     mouseDot.style.left = x + "px";
     mouseDot.style.top = y + "px";
+    updateMousePosition(x, y);
   }
 });
